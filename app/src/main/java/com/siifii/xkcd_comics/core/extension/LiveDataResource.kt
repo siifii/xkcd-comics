@@ -2,11 +2,13 @@ package com.siifii.xkcd_comics.core.extension
 
 import androidx.lifecycle.MutableLiveData
 
-/*
-Created by Kareem Alsaifi for  on 9/15/2021.
-Copyright (c) 2021 . All rights reserved.
-*/
-fun <T> MutableLiveData<Resource<T>>.setSuccess(data: T) =
+
+fun <T> MutableLiveData<T>.setData(data: T? = null) =
+    postValue(
+        data
+    )
+
+fun <T> MutableLiveData<Resource<T>>.setSuccess(data: T? = null) =
     postValue(
         Resource(
             ResourceState.SUCCESS,
@@ -14,20 +16,18 @@ fun <T> MutableLiveData<Resource<T>>.setSuccess(data: T) =
         )
     )
 
-
-fun <T> MutableLiveData<Resource<T>>.setLoading() =
+fun <T> MutableLiveData<Resource<T>>.setLoading(data: T? = null) =
     postValue(
         Resource(
-            ResourceState.LOADING,
-            value?.data
+            ResourceState.LOADING, data
         )
     )
 
-fun <T> MutableLiveData<Resource<T>>.setError(message: String? = null) =
+fun <T> MutableLiveData<Resource<T>>.setError(throwable: Throwable? = null) =
     postValue(
         Resource(
             ResourceState.ERROR,
             value?.data,
-            message
+            throwable
         )
     )
