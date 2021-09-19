@@ -5,9 +5,8 @@ A MVP to easy browse/view  [xkcd comics](https://xkcd.com/) which contains the f
 - Navigate to comic explaination.
 - You can share a comic to otheres.
 - Add your favourite comic to a bookmark.
-  -------------
   
-##Screenshots
+#Screenshots
 -----------
 <p align="center">
   <img src="https://github.com/siifii/xkcd-comics/blob/main/screenshots/Screenshot_1632037125.png" width="250">
