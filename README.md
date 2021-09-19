@@ -1,10 +1,10 @@
 # xkcd Comics Application
-A MVP to easy browse/view  [xkcd comics](https://xkcd.com/) which contains the following feature:
-  *Browsing throug the comics.
-  *Search the comic number you need.
-  *Navigate to comic explaination.
-  *You can share a comic to otheres.
-  *Add your favourite comic to a bookmark.
+A MVP to easy browse/view  [xkcd comics](https://xkcd.com/) which contains the following feature: 
+ -Browsing throug the comics.
+ -Search the comic number you need.
+ -Navigate to comic explaination.
+ -You can share a comic to otheres.
+ -Add your favourite comic to a bookmark.
   
   Screenshots
 -----------
