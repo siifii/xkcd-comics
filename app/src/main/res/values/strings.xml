@@ -5,8 +5,9 @@
     <string name="comic_search_hint">search a comic number</string>
     <string name="comic_previous">previous</string>
     <string name="comic_next">next</string>
-    <string name="comic_explanation">check comic explanation</string>
+    <string name="comic_explanation">Check comic explanation</string>
 
+    <string name="bookmarked_comics">Bookmarked Comics</string>
     <string name="bookmark_no_data_info">You haven\'t bookmarked any comic yet!</string>
 
     <string name="comic_description_dummy_label" tools:ignore="Typos">dummy dummy dummy dummy dummy dummy dummy dummy dummy</string>

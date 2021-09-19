@@ -33,6 +33,7 @@ class BrowseComicsViewModel @Inject constructor(private val interactor: BrowseCo
                         comicNumber.value = it.num
                         currentComicNumber.value = it.num
                     }
+                    checkComicExistsInBookmark()
                     comicModelLiveData.value = it
                     browseComicResource.setSuccess(it)
                     isCurrentComic = true
@@ -42,17 +43,48 @@ class BrowseComicsViewModel @Inject constructor(private val interactor: BrowseCo
         }
     }
 
-    fun addComicToBookMark(view: View) {
+    private fun checkComicExistsInBookmark(): Boolean {
+        var isExists = false
         launch {
-            interactor.addComicToBookMark(comicModelLiveData.value!!)
+            interactor.getComic(if (comicNumber.value != null) comicNumber.value.toString() else "")
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { browseComicResource.setLoading() }
                 .subscribe({
-                    comicModelLiveData.value!!.isBookmarked = true
-                    messageToShow.postValue("You have added comic #${comicModelLiveData.value!!.num} to your bookmark")
-
+                    comicModelLiveData.value = it
+                    isExists = true
                 }, {
-                    messageToShow.postValue(it.message)
+                    isExists = false
                 })
+        }
+        return isExists
+    }
+
+    fun addComicToBookMark(view: View) {
+        if (checkComicExistsInBookmark()) {
+            launch {
+                interactor.deleteComic(comicNumber.value!!)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        messageToShow.postValue("You have deleted comic #${comicNumber} from your bookmark")
+                    }, {
+                        messageToShow.postValue(it.message)
+                    })
+            }
+
+        } else {
+            comicModelLiveData.value!!.isBookmarked = true
+            launch {
+                interactor.addComicToBookMark(comicModelLiveData.value!!)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe({
+                        messageToShow.postValue("You have added comic #${comicModelLiveData.value!!.num} to your bookmark")
+
+                    }, {
+                        messageToShow.postValue(it.message)
+                    })
+            }
         }
     }
 

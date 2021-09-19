@@ -20,7 +20,7 @@ interface IComicDao {
     fun getAllComics(): Flowable<List<ComicModel>>
 
     @Query("SELECT * FROM comic where num = :comicNumber")
-    fun getComic(comicNumber: String): Observable<ComicModel>
+    fun getComic(comicNumber: String?): Observable<ComicModel>
 
     @Query("DELETE FROM comic where num = :comicNumber")
     fun deleteComic(comicNumber: Int): Completable

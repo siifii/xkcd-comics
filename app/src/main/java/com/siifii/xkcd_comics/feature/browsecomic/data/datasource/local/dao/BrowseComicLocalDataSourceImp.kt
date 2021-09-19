@@ -25,7 +25,7 @@ class BrowseComicLocalDataSourceImp @Inject constructor(private val dao: IComicD
         it.translate()
     }
 
-    override fun getComic(comicNumber: String): Observable<ComicModelEntity> =
+    override fun getComic(comicNumber: String?): Observable<ComicModelEntity> =
         dao.getComic(comicNumber).map { it.translate() }
 
     override fun addComicToBookMark(comicModelEntity: ComicModelEntity): Completable =

@@ -11,7 +11,7 @@ Copyright (c) 2021 . All rights reserved.
 */
 interface IBrowseComicLocalDataSource {
     fun getAllComics(): Flowable<List<ComicModelEntity>>
-    fun getComic(comicNumber: String): Observable<ComicModelEntity>
+    fun getComic(comicNumber: String?): Observable<ComicModelEntity>
     fun addComicToBookMark(comicModelEntity: ComicModelEntity): Completable
     fun deleteComic(comicNumber: Int): Completable
 }

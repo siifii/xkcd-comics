@@ -25,7 +25,7 @@ class BookmarkedComicsFragment :
 
     override fun initializeViews() {
         viewModel.getBookmarkedComics()
-        mBinding.BTBack.setOnClickListener { findNavController().navigateUp() }
+        mBinding.TVBack.setOnClickListener { findNavController().navigateUp() }
 
         observeOnDeleteBookmark()
         observeOnFavouriteComics()
@@ -43,7 +43,6 @@ class BookmarkedComicsFragment :
             this,
             {
                 if (it.first) viewModel.deleteBookmarkedComic(it.second.num!!)
-//                viewModel.favouriteComics.value?.toMutableList()?.remove(it.second)
             })
     }
 

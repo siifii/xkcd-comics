@@ -19,6 +19,11 @@ class BrowseComicInteractor @Inject constructor(private val browseComicRepositor
 
     fun getAllComics(): Flowable<List<ComicModelEntity>> = browseComicRepository.getAllComics()
 
+    fun getComic(comicNumber: String?): Observable<ComicModelEntity> =
+        browseComicRepository.getComic(
+            comicNumber = comicNumber
+        )
+
     fun addComicToBookMark(comicModelEntity: ComicModelEntity): Completable =
         browseComicRepository.addComicToBookMark(comicModelEntity)
 

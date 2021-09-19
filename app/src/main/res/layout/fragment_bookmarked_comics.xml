@@ -26,7 +26,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/BTBack"
+            app:layout_constraintTop_toBottomOf="@+id/TVBack"
             tools:listitem="@layout/list_item_bookmarked_comic" />
 
         <TextView
@@ -45,18 +45,24 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/BTBack" />
+            app:layout_constraintTop_toBottomOf="@+id/TVBack" />
 
 
-        <ImageView
-            android:id="@+id/BTBack"
+        <TextView
+            android:id="@+id/TVBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/comic_content_description_back"
-            android:src="@drawable/ic_back_32"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:text="@string/bookmarked_comics"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
+            app:drawableStartCompat="@drawable/ic_back_32"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

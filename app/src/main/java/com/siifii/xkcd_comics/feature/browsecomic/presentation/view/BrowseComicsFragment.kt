@@ -24,7 +24,6 @@ class BrowseComicsFragment :
     lateinit var viewModel: BrowseComicsViewModel
 
     override fun initializeViews() {
-        setHasOptionsMenu(true)
         viewModel.browseComic()
         viewModel.browseComicResource.observe(this, { onBrowsingNewComic(it) })
         viewModel.messageToShow.observe(
