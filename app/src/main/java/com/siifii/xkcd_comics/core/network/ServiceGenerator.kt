@@ -1,4 +1,4 @@
-package com.siifii.xkcd_comics.core.service
+package com.siifii.xkcd_comics.core.network
 
 import com.siifii.xkcd_comics.BuildConfig
 import okhttp3.OkHttpClient

@@ -7,5 +7,18 @@
     <fragment
         android:id="@+id/browseComicsFragment"
         android:name="com.siifii.xkcd_comics.feature.browsecomic.presentation.view.BrowseComicsFragment"
-        android:label="BrowseComicsFragment" />
+        android:label="BrowseComicsFragment">
+        <action
+            android:id="@+id/action_browseComicsFragment_to_bookmarkedComicsFragment"
+            app:destination="@id/bookmarkedComicsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookmarkedComicsFragment"
+        android:name="com.siifii.xkcd_comics.feature.bookmarkcomics.presentation.view.BookmarkedComicsFragment"
+        android:label="BookmarkedComicsFragment" />
 </navigation>

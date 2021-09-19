@@ -21,9 +21,11 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginEnd="8dp"
+            android:inputType="number"
             android:queryHint="@string/comic_search_hint"
             android:searchIcon="@drawable/ic_search_24"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintEnd_toStartOf="@+id/BTAddToBookmark"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -109,9 +111,24 @@
             android:textColor="@color/black"
             android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintBottom_toTopOf="@+id/TVComicDetails"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="@string/comic_title_dummy_label" />
+
+        <TextView
+            android:id="@+id/TVComicDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="start|center"
+            android:text="@{@string/comic_details(comicVM.comicModelLiveData.num,comicVM.comicModelLiveData.day, comicVM.comicModelLiveData.month, comicVM.comicModelLiveData.year)}"
+            android:textColor="@color/dark_grey"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/TVDescription"
+            app:layout_constraintEnd_toStartOf="@+id/FBShare"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/comic_number_dummy_label" />
 
         <TextView
             android:id="@+id/TVDescription"
@@ -121,7 +138,7 @@
             android:layout_marginEnd="16dp"
             android:elevation="9dp"
             android:text="@{comicVM.comicModelLiveData.alt}"
-            android:textColor="@color/light_grey"
+            android:textColor="@color/dark_grey"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/TVExplanation"
             app:layout_constraintEnd_toStartOf="@+id/FBBookMark"
@@ -140,33 +157,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="start|center"
-            android:text="@{@string/comic_details(comicVM.comicModelLiveData.num,comicVM.comicModelLiveData.day, comicVM.comicModelLiveData.month, comicVM.comicModelLiveData.year)}"
-            android:textColor="@color/light_grey"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/TVDescription"
-            app:layout_constraintEnd_toStartOf="@+id/FBShare"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="@string/comic_number_dummy_label" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.like.LikeButton
+            android:id="@+id/BTAddToBookmark"
+            isBookmarked="@{comicVM.comicModelLiveData.isBookmarked}"
+            onLikeClicked="@{comicVM::addComicToBookMark}"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/transparent"
-            android:backgroundTint="@color/black"
             android:contentDescription="@string/comic_content_description_add_favourite"
+            app:dots_primary_color="@color/light_grey"
+            app:dots_secondary_color="@color/black"
+            app:icon_size="25dp"
+            app:icon_type="Star"
             app:layout_constraintBottom_toBottomOf="@+id/SVComic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/SVComic"
-            app:srcCompat="@drawable/ic_favourite_border_32" />
+            app:layout_constraintTop_toTopOf="@+id/SVComic" />
 
         <TextView
             android:id="@+id/TVExplanation"
