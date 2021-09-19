@@ -8,11 +8,9 @@ A MVP to easy browse/view xkcd comics which contains the following feature:
   
   Screenshots
 -----------
-<p align="center">
 ![Comic_browsing](screenshots/Screenshot_1632037125.png "view/browse comics")
 ![Comic_Search](screenshots/phone_plant_detail.png "Search a comic with it's number")
 ![Comic_bookmark](Screenshot_1632037199.png "Checkout your bookmark with favourite comics")
-</p>
 
 * Tech-stack
     * [100% Kotlin](https://kotlinlang.org/) + [RxJava](https://github.com/ReactiveX/RxAndroid) - perform background operations
