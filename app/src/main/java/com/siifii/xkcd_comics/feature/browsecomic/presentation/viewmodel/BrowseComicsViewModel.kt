@@ -16,10 +16,11 @@ class BrowseComicsViewModel @Inject constructor(private val interactor: BrowseCo
     BaseViewModel() {
 
     private var isCurrentComic = false
+    private val currentComicNumber: MutableLiveData<Int?> = MutableLiveData<Int?>()
+    val messageToShow: SingleLiveEvent<String> = SingleLiveEvent()
     val comicNumber: MutableLiveData<Int> = MutableLiveData<Int>()
     val comicModelLiveData: MutableLiveData<ComicModelEntity> = MutableLiveData<ComicModelEntity>()
     val browseComicResource = SingleLiveEvent<Resource<ComicModelEntity>>()
-    private val currentComicNumber: MutableLiveData<Int?> = MutableLiveData<Int?>()
 
     fun browseComic() {
         launch {
@@ -37,6 +38,20 @@ class BrowseComicsViewModel @Inject constructor(private val interactor: BrowseCo
                     isCurrentComic = true
                 }, {
                     browseComicResource.setError(it)
+                })
+        }
+    }
+
+    fun addComicToBookMark(view: View) {
+        launch {
+            interactor.addComicToBookMark(comicModelLiveData.value!!)
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    comicModelLiveData.value!!.isBookmarked = true
+                    messageToShow.postValue("You have added comic #${comicModelLiveData.value!!.num} to your bookmark")
+
+                }, {
+                    messageToShow.postValue(it.message)
                 })
         }
     }

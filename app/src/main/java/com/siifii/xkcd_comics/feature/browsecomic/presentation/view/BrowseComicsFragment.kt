@@ -5,11 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.core.net.toUri
+import androidx.navigation.fragment.findNavController
 import com.siifii.xkcd_comics.R
+import com.siifii.xkcd_comics.core.Constants.COMIC_EXPLANATION_URL
 import com.siifii.xkcd_comics.core.base.BindingFragment
 import com.siifii.xkcd_comics.core.extension.*
-import com.siifii.xkcd_comics.core.service.Constants.COMIC_EXPLANATION_URL
 import com.siifii.xkcd_comics.databinding.FragmentBrowseComicsBinding
 import com.siifii.xkcd_comics.feature.browsecomic.domain.entity.ComicModelEntity
 import com.siifii.xkcd_comics.feature.browsecomic.presentation.viewmodel.BrowseComicsViewModel
@@ -27,9 +27,20 @@ class BrowseComicsFragment :
         setHasOptionsMenu(true)
         viewModel.browseComic()
         viewModel.browseComicResource.observe(this, { onBrowsingNewComic(it) })
+        viewModel.messageToShow.observe(
+            this,
+            { if (!it.isNullOrEmpty()) requireContext().longToast(it) })
         mBinding.FBShare.setOnClickListener { shareComic() }
+        mBinding.FBBookMark.setOnClickListener { findNavController().navigate(R.id.bookmarkedComicsFragment) }
         mBinding.TVExplanation.setOnClickListener { browseExplanation(COMIC_EXPLANATION_URL + { viewModel.comicNumber.value }) }
         invokeSearch()
+
+    }
+
+
+    override fun initializeDataBinding() {
+        mBinding.comicVM = viewModel
+        mBinding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun invokeSearch() {
@@ -50,15 +61,9 @@ class BrowseComicsFragment :
         if (viewModel.comicModelLiveData.value != null) {
             shareContent(
                 viewModel.comicModelLiveData.value!!.title,
-                viewModel.comicModelLiveData.value!!.alt,
-                viewModel.comicModelLiveData.value!!.img?.toUri()
+                viewModel.comicModelLiveData.value!!.alt
             )
         }
-    }
-
-    override fun initializeDataBinding() {
-        mBinding.comicVM = viewModel
-        mBinding.lifecycleOwner = viewLifecycleOwner
     }
 
     @SuppressLint("QueryPermissionsNeeded")

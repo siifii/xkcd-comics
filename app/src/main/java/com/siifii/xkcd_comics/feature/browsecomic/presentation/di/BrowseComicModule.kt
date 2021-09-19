@@ -1,10 +1,14 @@
 package com.siifii.xkcd_comics.feature.browsecomic.presentation.di
 
-import com.siifii.xkcd_comics.core.service.ServiceGenerator
-import com.siifii.xkcd_comics.feature.browsecomic.data.datasource.remote.BrowseComicRemoteRemoteDataSource
-import com.siifii.xkcd_comics.feature.browsecomic.data.datasource.remote.IBrowseComicRemoteDataSource
+import com.siifii.xkcd_comics.core.database.ComicsDatabase
+import com.siifii.xkcd_comics.core.network.ServiceGenerator
+import com.siifii.xkcd_comics.feature.bookmarkcomics.presentation.viewmodel.BookmarkedComicsViewModel
+import com.siifii.xkcd_comics.feature.browsecomic.data.datasource.IBrowseComicLocalDataSource
+import com.siifii.xkcd_comics.feature.browsecomic.data.datasource.IBrowseComicRemoteDataSource
+import com.siifii.xkcd_comics.feature.browsecomic.data.datasource.local.dao.BrowseComicLocalDataSourceImp
+import com.siifii.xkcd_comics.feature.browsecomic.data.datasource.remote.BrowseComicRemoteDataSourceImp
 import com.siifii.xkcd_comics.feature.browsecomic.data.datasource.remote.network.api.BrowseComicApiService
-import com.siifii.xkcd_comics.feature.browsecomic.data.repository.BrowseComicRepository
+import com.siifii.xkcd_comics.feature.browsecomic.data.repository.BrowseComicRepositoryImp
 import com.siifii.xkcd_comics.feature.browsecomic.domain.interactor.BrowseComicInteractor
 import com.siifii.xkcd_comics.feature.browsecomic.domain.repository.IBrowseComicRepository
 import com.siifii.xkcd_comics.feature.browsecomic.presentation.viewmodel.BrowseComicsViewModel
@@ -28,11 +32,18 @@ object BrowseComicModule {
 
     @Provides
     fun provideBrowseRemoteDataSource(browseComicApiService: BrowseComicApiService): IBrowseComicRemoteDataSource =
-        BrowseComicRemoteRemoteDataSource(browseComicApiService)
+        BrowseComicRemoteDataSourceImp(browseComicApiService)
 
     @Provides
-    fun provideBrowseComicRepository(remoteRemoteDataSource: IBrowseComicRemoteDataSource): IBrowseComicRepository =
-        BrowseComicRepository(remoteRemoteDataSource)
+    fun provideBrowseLocalDataSource(comicsDatabase: ComicsDatabase): IBrowseComicLocalDataSource =
+        BrowseComicLocalDataSourceImp(comicsDatabase.comicDao())
+
+    @Provides
+    fun provideBrowseComicRepository(
+        remoteDataSource: IBrowseComicRemoteDataSource,
+        localDataSource: IBrowseComicLocalDataSource
+    ): IBrowseComicRepository =
+        BrowseComicRepositoryImp(remoteDataSource, localDataSource)
 
     @Provides
     fun provideBrowseInterActor(browseRepository: IBrowseComicRepository): BrowseComicInteractor =
@@ -41,4 +52,8 @@ object BrowseComicModule {
     @Provides
     fun provideBrowseComicViewModel(interactor: BrowseComicInteractor): BrowseComicsViewModel =
         BrowseComicsViewModel(interactor)
+
+    @Provides
+    fun provideFavouriteComicsViewModel(interactor: BrowseComicInteractor): BookmarkedComicsViewModel =
+        BookmarkedComicsViewModel(interactor)
 }

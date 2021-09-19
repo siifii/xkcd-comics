@@ -1,4 +1,4 @@
-package com.siifii.xkcd_comics.feature.browsecomic.data.datasource.remote
+package com.siifii.xkcd_comics.feature.browsecomic.data.datasource
 
 import com.siifii.xkcd_comics.feature.browsecomic.data.model.ComicModel
 import io.reactivex.Observable
@@ -9,5 +9,4 @@ Copyright (c) 2021 . All rights reserved.
 */
 interface IBrowseComicRemoteDataSource {
     fun browseComic(comicNumber: String?): Observable<ComicModel>
-
 }

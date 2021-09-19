@@ -1,14 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Xkcd Comics</string>
+
     <string name="comic_details">#%1$s release date %2$s/%3$s/%4$s</string>
     <string name="comic_search_hint">search a comic number</string>
     <string name="comic_previous">previous</string>
     <string name="comic_next">next</string>
-    <string name="comic_content_description_add_favourite">Add to favourite</string>
+    <string name="comic_explanation">check comic explanation</string>
+
+    <string name="bookmark_no_data_info">You haven\'t bookmarked any comic yet!</string>
 
     <string name="comic_description_dummy_label" tools:ignore="Typos">dummy dummy dummy dummy dummy dummy dummy dummy dummy</string>
     <string name="comic_title_dummy_label">Dummy</string>
     <string name="comic_number_dummy_label">#664 release on 02/12/2022</string>
-    <string name="comic_explanation">check comic explanation</string>
+
+    <string name="comic_content_description_back">back</string>
+    <string name="comic_content_description_add_favourite">Add to favourite</string>
+    <string name="comic_content_description_delete_bookmark">Delete bookmark</string>
 
 </resources>
