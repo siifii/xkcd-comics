@@ -162,7 +162,7 @@
         <com.like.LikeButton
             android:id="@+id/BTAddToBookmark"
             isBookmarked="@{comicVM.comicModelLiveData.isBookmarked}"
-            onLikeClicked="@{comicVM::addComicToBookMark}"
+            onLikeClicked="@{comicVM::onAddComicToBookMarkClicked}"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="16dp"
