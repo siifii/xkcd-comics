@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @ActivityScoped
 class BrowseComicsViewModel @Inject constructor(private val interactor: BrowseComicInteractor) :
-    BaseViewModel() {
+        BaseViewModel() {
 
     private var isCurrentComic = false
     private val currentComicNumber: MutableLiveData<Int?> = MutableLiveData<Int?>()
@@ -25,21 +25,21 @@ class BrowseComicsViewModel @Inject constructor(private val interactor: BrowseCo
     fun browseComic() {
         launch {
             interactor.browseComic(if (comicNumber.value != null) comicNumber.value.toString() else "")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { browseComicResource.setLoading() }
-                .subscribe({
-                    if (!isCurrentComic) {
-                        comicNumber.value = it.num
-                        currentComicNumber.value = it.num
-                    }
-                    checkComicExistsInBookmark()
-                    comicModelLiveData.value = it
-                    browseComicResource.setSuccess(it)
-                    isCurrentComic = true
-                }, {
-                    browseComicResource.setError(it)
-                })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe { browseComicResource.setLoading() }
+                    .subscribe({
+                        if (!isCurrentComic) {
+                            comicNumber.value = it.num
+                            currentComicNumber.value = it.num
+                        }
+                        checkComicExistsInBookmark()
+                        comicModelLiveData.value = it
+                        browseComicResource.setSuccess(it)
+                        isCurrentComic = true
+                    }, {
+                        browseComicResource.setError(it)
+                    })
         }
     }
 
@@ -47,36 +47,27 @@ class BrowseComicsViewModel @Inject constructor(private val interactor: BrowseCo
         var isExists = false
         launch {
             interactor.getComic(if (comicNumber.value != null) comicNumber.value.toString() else "")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { browseComicResource.setLoading() }
-                .subscribe({
-                    comicModelLiveData.value = it
-                    isExists = true
-                }, {
-                    isExists = false
-                })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe { browseComicResource.setLoading() }
+                    .subscribe({
+                        comicModelLiveData.value = it
+                        isExists = true
+                    }, {
+                        isExists = false
+                    })
         }
         return isExists
     }
 
-    fun addComicToBookMark(view: View) {
-        if (checkComicExistsInBookmark()) {
-            launch {
-                interactor.deleteComic(comicNumber.value!!)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        messageToShow.postValue("You have deleted comic #${comicNumber} from your bookmark")
-                    }, {
-                        messageToShow.postValue(it.message)
-                    })
-            }
+    fun onAddComicToBookMarkClicked(view: View) {
+        if (checkComicExistsInBookmark()) deleteComicFromBookmark() else addComicToBookmark()
+    }
 
-        } else {
-            comicModelLiveData.value!!.isBookmarked = true
-            launch {
-                interactor.addComicToBookMark(comicModelLiveData.value!!)
+    private fun addComicToBookmark() {
+        comicModelLiveData.value!!.isBookmarked = true
+        launch {
+            interactor.addComicToBookMark(comicModelLiveData.value!!)
                     .subscribeOn(Schedulers.io())
                     .subscribe({
                         messageToShow.postValue("You have added comic #${comicModelLiveData.value!!.num} to your bookmark")
@@ -84,7 +75,20 @@ class BrowseComicsViewModel @Inject constructor(private val interactor: BrowseCo
                     }, {
                         messageToShow.postValue(it.message)
                     })
-            }
+        }
+    }
+
+
+    private fun deleteComicFromBookmark() {
+        launch {
+            interactor.deleteComic(comicNumber.value!!)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        messageToShow.postValue("You have deleted comic #${comicNumber} from your bookmark")
+                    }, {
+                        messageToShow.postValue(it.message)
+                    })
         }
     }
 
